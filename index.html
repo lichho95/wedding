@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#fff8f4">
+  <meta name="description" content="Minh & Lan — Lời mời nhỏ cho một ngày thật đặc biệt.">
+  <meta property="og:title" content="Minh & Lan | Thiệp cưới">
+  <meta property="og:description" content="Mời bạn cùng chung vui ngày hạnh phúc của chúng mình.">
+  <meta property="og:image" content="assets/hero-01.webp">
+  <title>Minh & Lan — Thiệp cưới</title>
+  <link rel="icon" type="image/svg+xml" href="assets/heart.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="config.js" defer></script>
+  <script src="script.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#welcome">Bỏ qua điều hướng</a>
+<div class="heart-rain" id="heart-rain" aria-hidden="true"></div>
+<div class="scroll-meter" id="scroll-meter" aria-hidden="true"></div>
+<header class="header" id="header">
+  <nav class="nav shell" aria-label="Điều hướng chính">
+    <a class="brand" href="#home"><span class="brand-heart">♡</span><span data-couple>Minh &amp; Lan</span></a>
+    <button class="menu-btn" id="menu-btn" type="button" aria-label="Mở menu" aria-controls="menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    <div class="menu" id="menu">
+      <a href="#home">Trang chủ</a><a href="#story">Chuyện chúng mình</a><a href="#film">Video</a><a href="#gallery">Thư viện ảnh</a><a href="#ceremonies">Thông tin cưới</a><a href="#events">Lịch trình</a><a href="#gifts">Mừng cưới</a><a href="#maps">Địa điểm</a>
+    </div>
+  </nav>
+</header>
+<main>
+<!-- ================= HERO / SLIDER =================
+    Thay ảnh trong assets/hero-01.webp, hero-02.webp, hero-03.webp.
+    Kích thước khuyên dùng: 1920x1000 px (landscape), WebP <500 KB.
+    Vùng quan trọng đặt ở giữa-bên trái để không bị che bởi chữ.
+    Hai ảnh polaroid: assets/polaroid.webp (600x750 px), assets/gallery-02.webp (1000x800 px).
+-->
+<section class="hero" id="home" aria-label="Album ảnh mở đầu">
+  <div class="hero-slides" id="hero-slides">
+    <div class="hero-slide active"><img src="/assets/hero-01.webp" alt="Cô dâu chú rể trong khu vườn hoa" fetchpriority="high"></div>
+    <div class="hero-slide"><img src="assets/hero-02.webp" alt="Khoảnh khắc hạnh phúc bên nhau"></div>
+    <div class="hero-slide"><img src="assets/hero-03.webp" alt="Hai người giữa khung cảnh lãng mạn"></div>
+  </div>
+  <div class="hero-fade"></div>
+  <div class="hero-flower-left" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-label">LỄ THÀNH HÔN</div>
+    <h1 class="hero-name" data-couple>Minh &amp; Lan</h1>
+    <p class="hero-verse">“Cùng nhau, chúng ta viết tiếp<br>những ngày tháng thật đẹp...”</p>
+    <div class="ornament"><span></span>♡<span></span></div>
+    <div class="hero-date" data-date-display>15 . 11 . 2027</div>
+  </div>
+  <div class="hero-polaroids" aria-hidden="true">
+    <figure class="hero-polaroid photo-a"><img src="assets/polaroid.webp" alt=""><figcaption>Thanh xuân<br>có nhau là đủ...</figcaption></figure>
+    <figure class="hero-polaroid photo-b"><img src="assets/gallery-02.webp" alt=""></figure>
+  </div>
+  <button class="hero-arrow prev" id="hero-prev" aria-label="Ảnh trước" type="button">‹</button>
+  <button class="hero-arrow next" id="hero-next" aria-label="Ảnh tiếp theo" type="button">›</button>
+  <div class="hero-dots" id="hero-dots" aria-label="Chọn ảnh">
+    <button class="on" aria-label="Ảnh 1" data-slide="0"></button><button aria-label="Ảnh 2" data-slide="1"></button><button aria-label="Ảnh 3" data-slide="2"></button>
+  </div>
+</section>
+
+<!-- ================= WELCOME / COUNTDOWN ================= -->
+<section class="welcome-section decorated" id="welcome">
+  <img class="floral floral-tl" src="assets/floral.svg" alt="" aria-hidden="true">
+  <div class="shell welcome-layout">
+    <div class="welcome-text emerge"><span class="kicker">THÂN MỜI BẠN</span><h2>Chào mừng đến với<br>hành trình hạnh phúc<br>của chúng mình!</h2>
+      <p>Chúng mình thật vinh dự và hạnh phúc khi được chia sẻ khoảnh khắc đặc biệt này cùng những người thân yêu. Sự hiện diện của bạn là niềm vui lớn nhất trong ngày trọng đại của chúng mình!</p><div class="small-ornament">── ♡ ──</div>
+    </div>
+    <div class="welcome-count emerge"><span class="kicker">ĐẾM NGƯỢC ĐẾN NGÀY CƯỚI</span>
+      <div class="count-grid" id="count-grid"><div><b id="days">00</b><span>Ngày</span></div><div><b id="hours">00</b><span>Giờ</span></div><div><b id="minutes">00</b><span>Phút</span></div><div><b id="seconds">00</b><span>Giây</span></div></div>
+      <div class="small-ornament">── ♡ ──</div><p class="count-caption" id="count-caption">Cùng đếm ngược đến khoảnh khắc chúng ta chính thức là một gia đình nhé!</p>
+    </div>
+    <div class="welcome-portrait emerge"><div class="paper-photo"><img src="assets/polaroid.webp" alt="Hai người ngắm hoàng hôn"><span>Forever and always ♡</span></div><p>Thanh xuân<br>có nhau<br>là đủ...</p></div>
+  </div>
+</section>
+
+<!-- ================= WEDDING INFORMATION =================
+  4 card sẽ tự đọc dữ liệu trong config.js: events.*
+  Ảnh nhà minh họa: assets/venue.svg (vector, không bắt buộc thay).
+-->
+<section class="wedding-section decorated" id="ceremonies">
+  <div class="shell"><div class="heading emerge"><h2>THÔNG TIN LỄ CƯỚI</h2><p>Rất hân hạnh được đón tiếp bạn tại ngày trọng đại của chúng mình!</p></div>
+    <div class="wedding-cards">
+      <article class="wedding-card emerge" data-event="brideCeremony"><span class="card-icon">♧</span><h3>LỄ THÀNH HÔN NHÀ GÁI</h3><div class="card-info"><p><i>▦</i><span data-field="date"></span></p><p><i>◷</i><span data-field="time"></span></p><p><i>⌖</i><span data-field="address"></span></p></div><img class="venue-art" src="assets/venue.svg" alt=""></article>
+      <article class="wedding-card emerge" data-event="groomCeremony"><span class="card-icon">♧</span><h3>LỄ THÀNH HÔN NHÀ TRAI</h3><div class="card-info"><p><i>▦</i><span data-field="date"></span></p><p><i>◷</i><span data-field="time"></span></p><p><i>⌖</i><span data-field="address"></span></p></div><img class="venue-art" src="assets/venue.svg" alt=""></article>
+      <article class="wedding-card emerge" data-event="brideParty"><span class="card-icon">♕</span><h3>TIỆC CƯỚI NHÀ GÁI</h3><div class="card-info"><p><i>▦</i><span data-field="date"></span></p><p><i>◷</i><span data-field="time"></span></p><p><i>⌖</i><span data-field="address"></span></p></div><img class="venue-art" src="assets/venue.svg" alt=""></article>
+      <article class="wedding-card emerge" data-event="groomParty"><span class="card-icon">♕</span><h3>TIỆC CƯỚI NHÀ TRAI</h3><div class="card-info"><p><i>▦</i><span data-field="date"></span></p><p><i>◷</i><span data-field="time"></span></p><p><i>⌖</i><span data-field="address"></span></p></div><img class="venue-art" src="assets/venue.svg" alt=""></article>
+    </div>
+  </div>
+  <img class="floral floral-br" src="assets/floral.svg" alt="" aria-hidden="true">
+</section>
+
+<!-- ================= ANIMATED LOVE JOURNEY =================
+    Ảnh 5 mốc: assets/story-01.webp ... story-05.webp
+    Ảnh chuẩn 800x800 px, JPG/WebP, nên dùng ảnh gốc không có viền tròn.
+    Progress trái tim đi theo đường cong SVG trên desktop; đổi thành trục dọc trên mobile.
+-->
+<section class="story-section decorated" id="story">
+  <img class="floral floral-tl" src="assets/floral.svg" alt="" aria-hidden="true">
+  <div class="shell"><div class="heading emerge"><h2>CHUYỆN CHÚNG MÌNH</h2><p>Từ những điều nhỏ bé, chúng ta đã viết nên một hành trình thật đẹp...</p></div>
+    <div class="love-track" id="love-track">
+      <svg class="love-svg" id="love-svg" aria-hidden="true"><path id="love-path" class="love-base"/><path id="love-fill" class="love-fill"/></svg>
+      <span class="travel-heart" id="travel-heart" aria-hidden="true">♥</span>
+      <div class="love-moments">
+        <article class="love-moment"><div class="love-photo"><img src="assets/story-01.webp" alt="Kỷ niệm lần đầu gặp nhau"></div><h3>Lần đầu gặp gỡ</h3><span class="love-year">01.2022</span><p>Một cuộc gặp gỡ tình cờ nhưng thật đặc biệt...</p></article>
+        <article class="love-moment"><div class="love-photo"><img src="assets/story-02.webp" alt="Kỷ niệm ngày yêu nhau"></div><h3>Bắt đầu yêu</h3><span class="love-year">06.2023</span><p>Chúng mình chính thức ở bên nhau ♡</p></article>
+        <article class="love-moment"><div class="love-photo"><img src="assets/story-03.webp" alt="Kỷ niệm ngày cầu hôn"></div><h3>Cầu hôn</h3><span class="love-year">02.2027</span><p>Một lời hứa cho hành trình mãi mãi...</p></article>
+        <article class="love-moment"><div class="love-photo"><img src="assets/story-04.webp" alt="Khoảnh khắc chụp ảnh cưới"></div><h3>Chụp ảnh cưới</h3><span class="love-year">08.2027</span><p>Lưu giữ những khoảnh khắc đẹp nhất thanh xuân.</p></article>
+        <article class="love-moment"><div class="love-photo"><img src="assets/story-05.webp" alt="Kỷ niệm về chung một nhà"></div><h3>Về chung một nhà</h3><span class="love-year" id="story-wedding-date">15.11.2027</span><p>Cùng nhau bước sang chương mới của cuộc đời!</p></article>
+      </div>
+    </div>
+    <div class="story-control"><button id="replay-love" class="text-button" type="button">♡ Xem lại hành trình</button></div>
+  </div>
+</section>
+
+<!-- ================= VIDEO + PHOTO GALLERY =================
+    Video poster: assets/video-poster.webp — 1920x1080 px, tỉ lệ 16:9.
+    Video MP4: assets/wedding-film.mp4, hoặc YouTube embed trong config.js > video.
+    Album: assets/gallery-01..06.webp. Kích thước ảnh 1200x900 px (4:3),
+    ảnh gallery-01 khuyên dùng 1200x1400 px (ảnh đứng).
+-->
+<section class="media-section decorated" id="film">
+  <div class="shell media-layout">
+    <div class="media-block"><div class="heading emerge"><h2>THƯỚC PHIM TÌNH YÊU</h2><p>Một chút thanh xuân, một chút yêu thương, và cả một đời bên nhau...</p></div>
+      <button class="film-card emerge" id="play-film" type="button" aria-label="Xem thước phim tình yêu"><img id="film-poster" src="assets/video-poster.webp" alt="Ảnh bìa video cưới bên hồ lúc hoàng hôn"><div class="film-shade"></div><span class="film-handwriting">Thanh xuân<br>có nhau<br>là đủ...</span><span class="play-circle">▶</span><span class="film-controls" aria-hidden="true">▶ &nbsp; 0:00 / 4:20 <span>━━━━━━━━━━━━━━━━━━━━━━━━　⛶</span></span></button>
+    </div>
+    <div class="media-block gallery-block" id="gallery"><div class="heading emerge"><h2>THƯ VIỆN ẢNH</h2><p>Những khoảnh khắc đáng nhớ trên hành trình của chúng mình...</p></div>
+      <div class="gallery-grid emerge" id="gallery-grid">
+        <button class="gallery-photo feature" data-photo="0" aria-label="Xem ảnh cưới 1"><img src="assets/gallery-01.webp" alt="Cặp đôi cùng bó hoa"></button>
+        <button class="gallery-photo" data-photo="1" aria-label="Xem ảnh cưới 2"><img src="assets/gallery-02.webp" alt="Cặp đôi bên hồ"></button>
+        <button class="gallery-photo" data-photo="2" aria-label="Xem ảnh cưới 3"><img src="assets/gallery-03.webp" alt="Chân dung cô dâu"></button>
+        <button class="gallery-photo" data-photo="3" aria-label="Xem ảnh cưới 4"><img src="assets/gallery-04.webp" alt="Đôi bàn tay nắm chặt"></button>
+        <button class="gallery-photo" data-photo="4" aria-label="Xem ảnh cưới 5"><img src="assets/gallery-05.webp" alt="Chú rể trong khu vườn"></button>
+        <button class="gallery-photo" data-photo="5" aria-label="Xem ảnh cưới 6"><img src="assets/gallery-06.webp" alt="Cô dâu giữa thiên nhiên"></button>
+      </div>
+      <button class="gallery-more" id="gallery-more" type="button">Xem thêm ảnh &nbsp; →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ================= 2 FAMILY SCHEDULES + GIFTS =================
+     Hai ngày tổ chức tách biệt, thay trong config.js > schedules.
+     Hộp mừng cưới chỉ minh họa. QR mẫu cần thay bởi ảnh QR thực tế 700x700px.
+-->
+<section class="celebration-section decorated" id="events">
+  <img class="floral floral-tl" src="assets/floral.svg" alt="" aria-hidden="true">
+  <div class="shell celebration-layout">
+    <div class="schedule-side"><div class="heading emerge"><h2>LỊCH TRÌNH NGÀY VUI</h2><p>Cùng chúng mình tạo nên những kỷ niệm thật đẹp nhé!</p></div>
+      <div class="schedule-pair">
+        <article class="schedule-card emerge" data-schedule="bride"><div class="schedule-top"><span class="house-icon">⌂</span><div><h3>Ngày vui nhà gái</h3><time data-date>14.11.2027</time></div></div><ol class="schedule-steps"></ol></article>
+        <article class="schedule-card emerge" data-schedule="groom"><div class="schedule-top"><span class="house-icon">⌂</span><div><h3>Ngày vui nhà trai</h3><time data-date>15.11.2027</time></div></div><ol class="schedule-steps"></ol></article>
+      </div>
+    </div>
+    <div class="gifts-side" id="gifts"><div class="heading emerge"><h2>MỪNG CƯỚI</h2><p>Sự hiện diện của bạn đã là món quà quý giá nhất.<br>Nếu muốn gửi thêm một chút yêu thương từ xa, gia đình xin trân trọng đón nhận.</p></div>
+      <div class="gift-pair">
+        <article class="envelope-card emerge" data-gift="bride"><h3>♡ Mừng cưới nhà gái</h3><div class="envelope-inside"><div class="envelope-top"></div><img class="gift-qr" src="assets/qr-nha-gai.svg" alt="QR minh họa bên nhà gái, chưa dùng chuyển tiền"><div class="bank-text"><strong data-bank>Ngân hàng</strong><span data-owner>Nhà gái</span><button class="account-copy" type="button" data-account aria-label="Sao chép số tài khoản">Chưa cập nhật</button></div></div><div class="gift-ribbon" aria-hidden="true">🎁</div></article>
+        <article class="envelope-card emerge" data-gift="groom"><h3>♡ Mừng cưới nhà trai</h3><div class="envelope-inside"><div class="envelope-top"></div><img class="gift-qr" src="assets/qr-nha-trai.svg" alt="QR minh họa bên nhà trai, chưa dùng chuyển tiền"><div class="bank-text"><strong data-bank>Ngân hàng</strong><span data-owner>Nhà trai</span><button class="account-copy" type="button" data-account aria-label="Sao chép số tài khoản">Chưa cập nhật</button></div></div><div class="gift-ribbon" aria-hidden="true">🎁</div></article>
+      </div>
+      <div class="gift-footnote">Có bạn chung vui đã là điều chúng mình trân quý nhất ♡</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= LOCATIONS =================
+  Hai ảnh mini-map đang là HÌNH MINH HỌA, không phải định vị thật.
+  Địa chỉ & Google Maps URL thật nhập trong config.js > locations.
+  Có thể thay map-gai.webp/map-trai.webp bằng ảnh khu vực 900x360px.
+-->
+<section class="location-section decorated" id="maps">
+  <div class="shell"><div class="heading emerge"><h2>ĐỊA ĐIỂM TỔ CHỨC</h2><p>Dưới đây là địa chỉ chi tiết để bạn dễ dàng tìm đến. Hẹn gặp bạn tại ngày vui của chúng mình!</p></div>
+    <div class="location-layout">
+      <article class="location-card emerge" data-location="bride"><div class="location-copy"><h3>✿ Tư gia nhà gái</h3><p data-address>[Cập nhật địa chỉ]</p><a class="direction" href="#maps" data-map-link target="_blank" rel="noopener noreferrer">Chỉ đường &nbsp; →</a></div><img src="assets/map-gai.webp" alt="Bản đồ minh họa địa điểm bên nhà gái"></article>
+      <article class="location-card emerge" data-location="groom"><div class="location-copy"><h3>✿ Tư gia nhà trai</h3><p data-address>[Cập nhật địa chỉ]</p><a class="direction" href="#maps" data-map-link target="_blank" rel="noopener noreferrer">Chỉ đường &nbsp; →</a></div><img src="assets/map-trai.webp" alt="Bản đồ minh họa địa điểm bên nhà trai"></article>
+      <div class="location-note">Hẹn gặp bạn<br>tại ngày vui của<br>chúng mình!<br><strong data-couple>Minh &amp; Lan</strong> ♡</div>
+    </div>
+  </div>
+</section>
+</main>
+<footer class="footer"><div class="shell footer-inner"><a href="#home" class="footer-logo">♡ <span data-couple>Minh &amp; Lan</span></a><div class="footer-menu"><a href="#home">Trang chủ</a><a href="#story">Chuyện chúng mình</a><a href="#film">Video</a><a href="#gallery">Ảnh cưới</a><a href="#events">Lịch trình</a><a href="#gifts">Mừng cưới</a></div><span class="footer-thanks">Cảm ơn bạn đã là một phần trong hành trình hạnh phúc này! ♥</span></div></footer>
+
+<dialog class="viewer" id="photo-viewer" aria-label="Xem album ảnh"><button class="close-viewer" id="close-photo" type="button" aria-label="Đóng">×</button><button class="viewer-nav" id="viewer-prev" type="button" aria-label="Ảnh trước">‹</button><img src="assets/gallery-01.webp" alt="Ảnh cưới phóng to" id="viewer-image"><button class="viewer-nav" id="viewer-next" type="button" aria-label="Ảnh tiếp theo">›</button></dialog>
+<dialog class="viewer film-viewer" id="film-viewer" aria-label="Video tình yêu"><button class="close-viewer" id="close-film" type="button" aria-label="Đóng video">×</button><div id="film-holder" class="film-holder"></div></dialog>
+<div class="notice" role="status" id="notice" aria-live="polite"></div>
+</body>
+</html>
