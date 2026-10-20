@@ -197,14 +197,33 @@
     const data=C.gifts?.[card.dataset.gift]||{};
     setText($('[data-bank]',card),data.bank||'QR minh họa');
     setText($('[data-owner]',card),data.owner|| (card.dataset.gift==='bride'?'Nhà gái':'Nhà trai'));
+    // Logo ngân hàng tùy chọn: biểu tượng PNG/SVG vuông ~128×128px, nền trong.
+    // Nếu để trống bankLogo, sử dụng họa tiết ngân hàng mặc định trong CSS.
+    if(data.bankLogo){
+      const mark=$('.bank-mark',card);
+      const logo=document.createElement('img');
+      logo.src=data.bankLogo;logo.alt='';logo.className='bank-logo';
+      mark?.replaceChildren(logo);
+      mark?.classList.add('has-bank-logo');
+    }
     const account=$('[data-account]',card);
-    setText(account,data.account||'Chưa cập nhật');
+    setText(account,data.account||'Chưa cập nhật STK');
+    if(!data.account)account?.setAttribute('data-missing','');
+    else account?.removeAttribute('data-missing');
     if(data.qrImage)$('.gift-qr',card).src=data.qrImage;
     account?.addEventListener('click',async()=>{
       if(!data.account){notify('Thông tin ngân hàng chưa được cập nhật');return;}
       try{await navigator.clipboard.writeText(data.account);notify('Đã sao chép số tài khoản ♡')}catch{notify('Bạn có thể chọn và sao chép số tài khoản')}
     });
   });
+
+  /* Cảnh báo chỉ hiển thị khi QR/tài khoản đang là dữ liệu mẫu. */
+  const exampleQr=/qr-nha-(?:gai|trai)\.svg/i;
+  const configuredBoth=['bride','groom'].every(side=>{
+    const info=C.gifts?.[side];
+    return info?.bank && info?.owner && info?.account && info?.qrImage && !exampleQr.test(info.qrImage);
+  });
+  if(configuredBoth)$('#gift-demo-note')?.remove();
 
   /* Locations. Only enable "Chỉ đường" when actual Google Maps URL has been configured. */
   $$('[data-location]').forEach(card=>{

@@ -33,3 +33,163 @@
 @media(max-width:580px){body{font-size:12px}.hero{height:585px}.hero-slide img{width:100%;height:62%;object-position:center 28%}.hero-fade{background:linear-gradient(0deg,#fff7f1 0%,#fff7f1 21%,#fff7f1dc 43%,transparent 72%)}.hero-content{top:auto;bottom:56px;transform:none;left:8%;right:8%;text-align:center}.hero-name{font-size:clamp(48px,15vw,85px)}.hero-verse{font-size:17px;margin:7px 0}.hero-label{font-size:12px}.hero-date{font-size:22px}.hero-flower-left{width:113px;left:-24px;bottom:-19px}.hero-dots{bottom:15px}.hero-arrow{top:33%;width:32px;height:32px}.welcome-layout{grid-template-columns:1fr;gap:16px}.welcome-section{padding:28px 0}.welcome-text h2{font-size:28px}.welcome-text p{max-width:360px;font-size:14px}.welcome-count{padding:5px}.count-grid{gap:10px}.count-grid div{min-width:71px}.count-grid b{font-size:39px}.wedding-section,.story-section,.media-section,.celebration-section,.location-section{padding:30px 0}.heading{margin-bottom:18px}.heading h2{font-size:29px}.heading p{font-size:14px;max-width:340px;margin:auto}.wedding-cards{gap:10px}.wedding-card{height:196px;padding:9px 5px}.wedding-card h3{font-size:14px;min-height:34px;margin:2px 0 7px}.wedding-card .card-icon{font-size:22px}.wedding-card::after{opacity:.3}.venue-art{height:73px;width:64%;left:-11px;bottom:5px;opacity:.63}.card-info{margin-left:8px;margin-top:3px}.card-info p{font-size:12px;margin-bottom:7px;gap:5px}.card-info p:last-child{max-width:100%}.love-track{padding:12px 0 0;min-height:auto}.love-moments{display:flex;flex-direction:column;gap:0}.love-moment,.love-moment:nth-child(even){padding:0 3px 0 104px;min-height:124px;text-align:left;width:100%;display:flex;flex-direction:column;justify-content:center}.love-photo{position:absolute;left:0;top:7px;width:89px;height:89px;margin:0}.love-moment h3{font-size:22px}.love-year{font-size:16px}.love-moment p{max-width:none;margin:2px 0;font-size:14px}.love-svg{left:0;top:0}.story-control{margin-top:12px}.media-layout{gap:28px}.media-block .heading{margin-bottom:12px}.film-card{border-width:3px}.film-handwriting{font-size:31px;top:20px;left:20px}.film-controls span{font-size:8px}.gallery-grid{height:auto;aspect-ratio:1.55/1}.gallery-more{margin-top:8px}.schedule-pair,.gift-pair{grid-template-columns:1fr;gap:12px}.schedule-card{padding:12px;min-height:160px}.schedule-top{gap:16px}.schedule-top h3{font-size:23px}.schedule-top time{font-size:17px}.schedule-steps li strong{font-size:17px}.schedule-steps li span:last-child{font-size:14px}.schedule-steps li small{font-size:12px}.gift-pair{grid-template-columns:1fr 1fr;gap:8px}.envelope-card{min-height:191px;padding:6px}.envelope-card h3{font-size:16px}.envelope-inside{flex-direction:column;align-items:center;gap:5px;min-height:150px}.gift-qr{width:74px;height:74px}.bank-text{text-align:center;align-items:center}.bank-text strong,.bank-text span,.account-copy{font-size:12px}.gift-ribbon{font-size:25px;bottom:-5px}.location-layout{grid-template-columns:1fr;gap:12px}.location-card{min-height:134px;grid-template-columns:40% 60%}.location-card img{height:134px}.location-copy h3{font-size:20px}.location-copy p{font-size:14px}.footer-inner{justify-content:center;flex-direction:column;gap:7px}.footer-menu{justify-content:center}.footer-logo{font-size:26px}.viewer{padding:55px 6px 30px}.viewer>img{max-width:80vw}.viewer-nav{width:28px;height:28px;min-width:28px}.close-viewer{top:5px;right:12px}}
 @media(max-width:350px){.shell{width:calc(100% - 22px)}.hero-name{font-size:48px}.wedding-card h3{font-size:12px}.card-info p{font-size:11px}.gift-qr{width:64px;height:64px}.bank-text strong,.bank-text span,.account-copy{font-size:11px}.schedule-steps li span:last-child{font-size:12px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation:none!important;transition:none!important}.heart-rain{display:none}.emerge:not(.shown){opacity:1;transform:none}}
+
+/* ===============================================================
+   V3.1 — MỪNG CƯỚI: phong bì mở, thiệp giấy, hoa và hộp quà
+   Thay đổi có chủ đích CHỈ cho phần Mừng cưới; các khu vực khác giữ nguyên.
+   Size ảnh QR được comment trong index.html: 700 x 700px, 1:1.
+   =============================================================== */
+.gifts-side {position:relative; min-width:0; isolation:isolate}
+.gift-heading {margin-bottom:14px}
+.gift-heading p {line-height:1.38; max-width:520px; margin:0 auto; font-size:14px}
+.gift-pair {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;padding:0 14px 17px;align-items:stretch}
+.envelope-card {
+  overflow:visible; background:transparent; border:0; box-shadow:none;
+  border-radius:0; position:relative; isolation:isolate; min-width:0;
+  min-height:207px; padding:0; transform-origin:50% 70%;
+  transition:transform .32s ease, filter .32s ease;
+}
+.envelope-card:hover {transform:translateY(-4px);filter:drop-shadow(0 7px 11px #8d566020)}
+.envelope-shell {
+  position:absolute;left:0;right:0;top:17px;bottom:7px;
+  border:1px solid #eebfbc;border-radius:20px 20px 12px 12px;
+  background:linear-gradient(130deg,#fff0e9 2%,#f9d1d0 56%,#fce9de 100%);
+  box-shadow:0 9px 18px #9e64622b,inset 0 1px 0 #fffdfa;
+  overflow:hidden;
+}
+.envelope-shell::before {
+  content:"";position:absolute;top:0;left:0;right:0;height:73px;
+  background:linear-gradient(180deg,#ffece5,#f4c9cb);
+  border-bottom:1px solid #f0bdbd;
+  clip-path:polygon(0 0,100% 0,50% 100%);
+  z-index:1;
+}
+.envelope-back-flap {position:absolute;left:0;right:0;top:27px;height:85px;z-index:1;background:linear-gradient(135deg,#f7c6c7,#fff5e8);clip-path:polygon(0 0,50% 70%,100% 0,100% 100%,0 100%);opacity:.7}
+.envelope-header {position:absolute;z-index:7;left:0;right:0;top:7px;display:flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap}
+.envelope-header h3 {font:600 clamp(16px,1.44vw,20px)/1.1 var(--serif);color:#b94a59;margin:0;letter-spacing:.01em;text-shadow:0 1px 0 #fff9}
+.envelope-heart {font:20px/1 var(--serif);color:#e78d9d;filter:drop-shadow(0 2px 2px #fff)}
+.envelope-letter {
+  position:absolute;z-index:4;left:6%;right:5.5%;top:49px;height:125px;
+  display:grid;grid-template-columns:minmax(0,1fr) auto;gap:7px;
+  align-items:center;min-width:0;padding:19px 9px 7px 13px;
+  background:linear-gradient(130deg,#fffdfa 0%,#fffaf5 67%,#fff8f7 100%);
+  border:1px solid #f1d3d0;border-radius:7px 7px 2px 2px;
+  clip-path:polygon(0 12%,50% 0,100% 12%,100% 100%,0 100%);
+  box-shadow:0 6px 10px #9d6d6217;
+}
+.envelope-front-left,.envelope-front-right {position:absolute;z-index:5;bottom:0;height:43px;width:64%;pointer-events:none;background:linear-gradient(125deg,#ffe5d9,#f9cecd);filter:drop-shadow(0 -1px 1px #efbdb9)}
+.envelope-front-left {left:0;clip-path:polygon(0 0,100% 100%,0 100%)}
+.envelope-front-right {right:0;clip-path:polygon(100% 0,100% 100%,0 100%);background:linear-gradient(225deg,#f9ccca,#ffede0)}
+.envelope-front-left::after {content:"";position:absolute;inset:0;box-shadow:inset 0 2px #f4b7bc}
+.envelope-card .bank-text {display:flex;min-width:0;flex-direction:column;gap:5px;align-items:flex-start;justify-content:center;position:relative;z-index:1;text-align:left;padding-top:6px}
+.bank-brand {display:flex;align-items:center;gap:4px;min-width:0;max-width:100%}
+.bank-brand [data-bank] {font:700 clamp(11px,1vw,13px)/1.07 var(--sans);letter-spacing:-.04em;color:#16695d;white-space:normal;overflow-wrap:anywhere}
+[data-gift="groom"] .bank-brand [data-bank] {color:#bd4c54}
+.bank-mark {display:grid;place-items:center;width:20px;height:20px;flex:0 0 20px;position:relative;color:#00936d;font-size:15px;line-height:1}
+.bank-mark-bride {transform:rotate(13deg)}
+.bank-mark-groom i {width:10px;height:10px;position:absolute;transform:rotate(45deg);background:#d82c48}
+.bank-mark-groom i:first-child {left:2px;top:6px}
+.bank-mark-groom i:last-child {right:1px;top:2px;background:#ed5265}
+.envelope-card .bank-owner {font:600 clamp(10px,1vw,13px)/1.16 var(--serif);color:#7d5254;overflow-wrap:anywhere;display:block;max-width:100%;}
+.envelope-card .account-copy {
+  background:transparent; border:0;padding:2px 0 3px;color:#bc4252;
+  font:700 clamp(11px,1.05vw,15px)/1.14 var(--serif);text-align:left;overflow-wrap:anywhere;max-width:100%;
+  text-decoration-thickness:1px;
+}
+.envelope-card .account-copy:not([data-missing]):hover {text-decoration:underline}
+.envelope-card .account-copy[data-missing] {opacity:.8;color:#a57d79;cursor:default;font-size:11px}
+.qr-window {height:93px;width:93px;position:relative;z-index:1;display:grid;place-items:center;flex-shrink:0;background:white;border:4px solid white;box-shadow:0 3px 11px #ad6e6840;border-radius:3px}
+.envelope-card .gift-qr {width:100%;height:100%;object-fit:contain;border:0;box-shadow:none;display:block;image-rendering:auto}
+.envelope-flora {position:absolute;pointer-events:none;z-index:8;object-fit:contain;filter:drop-shadow(0 4px 4px #af8a7830)}
+.envelope-flora-left {bottom:-18px;left:-33px;width:111px;height:129px;transform:rotate(4deg)}
+.envelope-flora-top {top:-12px;left:-13px;width:58px;height:75px;transform:rotate(168deg);opacity:.87}
+.gift-present {position:absolute;z-index:10;bottom:-21px;right:-31px;width:70px;height:82px;object-fit:contain;filter:drop-shadow(0 7px 4px #9c656044);pointer-events:none;transform:rotate(3deg);transition:transform .38s ease}
+.envelope-card:hover .gift-present {transform:translateY(-4px) rotate(-5deg)}
+.gift-footnote {margin-top:1px;font-size:13px}
+.gift-demo-note {font:500 10px/1.35 var(--serif);color:#9c7875;text-align:center;max-width:440px;margin:4px auto 0;}
+@media (min-width:801px) and (max-width:1100px) {
+  .celebration-layout {grid-template-columns:1fr;gap:25px}
+  .gift-pair {max-width:710px;margin:0 auto;gap:26px}
+  .envelope-card {min-height:225px}
+  .envelope-letter {height:143px;top:52px;padding:21px 18px 10px 20px}
+  .qr-window {width:109px;height:109px}
+  .gift-heading p {font-size:15px}
+  .envelope-header h3 {font-size:22px}
+  .bank-brand [data-bank]{font-size:13px}
+  .envelope-card .bank-owner{font-size:13px}
+  .envelope-card .account-copy {font-size:15px}
+}
+@media (max-width:800px) {
+  .gift-pair {max-width:710px;margin:0 auto;gap:28px}
+  .envelope-card {min-height:219px}
+  .envelope-letter {height:137px;top:53px;padding:21px 12px 10px 17px}
+  .qr-window {width:100px;height:100px}
+  .gift-heading p {font-size:15px}
+  .envelope-header h3 {font-size:19px}
+  .bank-brand [data-bank]{font-size:12px}
+  .envelope-card .bank-owner{font-size:12px}
+  .envelope-card .account-copy {font-size:13px}
+}
+@media (max-width:580px) {
+  .gifts-side {margin-top:2px}
+  .gift-heading {margin-bottom:16px}
+  .gift-heading p {font-size:15px;line-height:1.37}
+  .gift-pair {grid-template-columns:1fr;gap:13px;max-width:390px;padding:0 30px 22px}
+  .envelope-card {min-height:212px}
+  .envelope-shell {top:13px;bottom:4px}
+  .envelope-header {top:9px}
+  .envelope-header h3 {font-size:22px}
+  .envelope-letter {top:52px;height:134px;gap:8px;padding:22px 13px 10px 21px}
+  .qr-window {width:95px;height:95px}
+  .bank-brand [data-bank] {font-size:13px}
+  .envelope-card .bank-owner{font-size:13px}
+  .envelope-card .account-copy{font-size:14px}
+  .envelope-flora-left {width:100px;height:111px;left:-26px;bottom:-13px}
+  .envelope-flora-top {left:-6px}
+  .gift-present {width:72px;height:80px;bottom:-16px;right:-23px}
+  .gift-demo-note {max-width:290px}
+}
+@media (max-width:350px) {
+  .gift-pair {padding:0 15px 19px}
+  .envelope-letter{padding-left:14px;padding-right:10px;gap:4px}
+  .qr-window{width:84px;height:84px}
+  .envelope-header h3{font-size:20px}
+  .bank-brand [data-bank]{font-size:11px}
+  .envelope-card .bank-owner,.envelope-card .account-copy{font-size:12px}
+  .envelope-flora-left {left:-19px}
+  .gift-present{right:-17px}
+}
+
+/* Floral cluster and compact bank typography tuned to the 2-envelope desktop mockup. */
+.envelope-flora-left {width:123px;height:108px;left:-29px;bottom:-17px;transform:rotate(-6deg);}
+.envelope-flora-top {width:88px;height:78px;left:-26px;top:-19px;transform:rotate(-11deg);opacity:.85}
+.bank-brand {gap:2px}
+.bank-mark {width:13px;height:16px;flex:0 0 13px;font-size:12px}
+.bank-mark-groom i {width:7px;height:7px}
+.bank-mark-groom i:first-child {left:1px;top:5px}
+.bank-mark-groom i:last-child {right:0;top:1px}
+.bank-brand [data-bank] {font-size:clamp(9px,.80vw,11px);white-space:nowrap;letter-spacing:-.06em;overflow-wrap:normal}
+.envelope-card .bank-owner {font-size:clamp(9px,.82vw,11px);line-height:1.18}
+@media(min-width:801px) and (max-width:1100px){.bank-brand [data-bank]{font-size:13px}.envelope-card .bank-owner{font-size:13px}}
+@media(max-width:800px){.bank-brand [data-bank]{font-size:12px}.envelope-card .bank-owner{font-size:12px}}
+@media(max-width:580px){.bank-brand [data-bank]{font-size:13px}.envelope-card .bank-owner{font-size:13px}.envelope-flora-left{left:-27px;bottom:-17px;width:120px;height:105px}}
+@media(max-width:350px){.bank-brand [data-bank]{font-size:11px}.envelope-card .bank-owner{font-size:11px}}
+/* Ensure text and account number stay legible above envelope folds/florals. */
+.envelope-front-left,.envelope-front-right{z-index:3;height:37px}
+.envelope-flora-left{width:106px;height:92px;left:-53px;bottom:-27px}
+.envelope-flora-top{width:80px;height:72px;left:-39px;top:-37px;opacity:.91}
+.envelope-card .account-copy[data-missing]{color:#ad7875;font-size:11px;position:relative;z-index:6}
+.envelope-letter{z-index:6}
+.envelope-header{z-index:9}
+@media (max-width:580px){
+  .envelope-flora-left{left:-47px;bottom:-26px;width:113px;height:96px}
+  .envelope-flora-top{top:-37px;left:-33px;width:84px;height:74px}
+}
+@media (max-width:350px){
+  .envelope-flora-left{left:-42px;bottom:-25px;width:102px;height:89px}
+}
+.envelope-flora-left{z-index:5}
+
+/* Bank icon override: config.js > gifts.{bride,groom}.bankLogo, SVG/PNG 128×128. */
+.bank-mark.has-bank-logo{width:18px;height:18px;flex:0 0 18px}
+.bank-logo{width:100%;height:100%;display:block;object-fit:contain}

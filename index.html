@@ -39,7 +39,7 @@
 -->
 <section class="hero" id="home" aria-label="Album ảnh mở đầu">
   <div class="hero-slides" id="hero-slides">
-    <div class="hero-slide active"><img src="/assets/hero-01.webp" alt="Cô dâu chú rể trong khu vườn hoa" fetchpriority="high"></div>
+    <div class="hero-slide active"><img src="assets/hero-01.webp" alt="Cô dâu chú rể trong khu vườn hoa" fetchpriority="high"></div>
     <div class="hero-slide"><img src="assets/hero-02.webp" alt="Khoảnh khắc hạnh phúc bên nhau"></div>
     <div class="hero-slide"><img src="assets/hero-03.webp" alt="Hai người giữa khung cảnh lãng mạn"></div>
   </div>
@@ -155,12 +155,63 @@
         <article class="schedule-card emerge" data-schedule="groom"><div class="schedule-top"><span class="house-icon">⌂</span><div><h3>Ngày vui nhà trai</h3><time data-date>15.11.2027</time></div></div><ol class="schedule-steps"></ol></article>
       </div>
     </div>
-    <div class="gifts-side" id="gifts"><div class="heading emerge"><h2>MỪNG CƯỚI</h2><p>Sự hiện diện của bạn đã là món quà quý giá nhất.<br>Nếu muốn gửi thêm một chút yêu thương từ xa, gia đình xin trân trọng đón nhận.</p></div>
-      <div class="gift-pair">
-        <article class="envelope-card emerge" data-gift="bride"><h3>♡ Mừng cưới nhà gái</h3><div class="envelope-inside"><div class="envelope-top"></div><img class="gift-qr" src="assets/qr-nha-gai.svg" alt="QR minh họa bên nhà gái, chưa dùng chuyển tiền"><div class="bank-text"><strong data-bank>Ngân hàng</strong><span data-owner>Nhà gái</span><button class="account-copy" type="button" data-account aria-label="Sao chép số tài khoản">Chưa cập nhật</button></div></div><div class="gift-ribbon" aria-hidden="true">🎁</div></article>
-        <article class="envelope-card emerge" data-gift="groom"><h3>♡ Mừng cưới nhà trai</h3><div class="envelope-inside"><div class="envelope-top"></div><img class="gift-qr" src="assets/qr-nha-trai.svg" alt="QR minh họa bên nhà trai, chưa dùng chuyển tiền"><div class="bank-text"><strong data-bank>Ngân hàng</strong><span data-owner>Nhà trai</span><button class="account-copy" type="button" data-account aria-label="Sao chép số tài khoản">Chưa cập nhật</button></div></div><div class="gift-ribbon" aria-hidden="true">🎁</div></article>
+    <!-- MỪNG CƯỚI — phong bì hoa & hộp quà theo mockup đã duyệt.
+         HÌNH QR: thay assets/qr-nha-gai.svg và qr-nha-trai.svg bằng QR chính chủ,
+         khuyến nghị file PNG/WebP 700 x 700px; sửa đường dẫn tại config.js > gifts.
+         THÔNG TIN: sửa ngân hàng, chủ tài khoản, số tài khoản tại config.js > gifts.
+         HỘP QUÀ: assets/gift-box-pink.svg và gift-box-champagne.svg (SVG scale được).
+         HOA: assets/floral.svg, SVG trang trí, không chứa thông tin cần chỉnh sửa.
+         Các QR hiện tại chỉ là MẪU trang trí, KHÔNG THỂ chuyển tiền.
+    -->
+    <div class="gifts-side" id="gifts">
+      <div class="heading emerge gift-heading">
+        <h2>MỪNG CƯỚI</h2>
+        <p>Sự hiện diện của bạn đã là món quà quý giá nhất.<br>
+           Nếu bạn muốn gửi thêm một chút yêu thương từ xa,<br class="desktop-break">
+           chúng mình và gia đình xin được trân trọng đón nhận.</p>
       </div>
-      <div class="gift-footnote">Có bạn chung vui đã là điều chúng mình trân quý nhất ♡</div>
+      <div class="gift-pair">
+        <article class="envelope-card emerge" data-gift="bride" aria-label="Mừng cưới nhà gái">
+          <div class="envelope-shell">
+            <div class="envelope-back-flap" aria-hidden="true"></div>
+            <div class="envelope-header"><span class="envelope-heart" aria-hidden="true">♥</span><h3>Mừng cưới nhà gái</h3></div>
+            <div class="envelope-letter">
+              <div class="bank-text">
+                <div class="bank-brand"><span class="bank-mark bank-mark-bride" aria-hidden="true">◆</span><strong data-bank>Vietcombank</strong></div>
+                <span class="bank-owner" data-owner>NGUYỄN THỊ LAN</span>
+                <button class="account-copy" type="button" data-account title="Sao chép số tài khoản" aria-label="Sao chép số tài khoản nhà gái">Chưa cập nhật STK</button>
+              </div>
+              <div class="qr-window"><img class="gift-qr" src="assets/qr-nha-gai.svg" alt="Mã QR minh họa nhà gái, cần thay bằng mã ngân hàng thật"></div>
+            </div>
+            <div class="envelope-front-left" aria-hidden="true"></div>
+            <div class="envelope-front-right" aria-hidden="true"></div>
+          </div>
+          <img class="envelope-flora envelope-flora-left" src="assets/gift-roses.svg" alt="" aria-hidden="true" loading="lazy">
+          <img class="envelope-flora envelope-flora-top" src="assets/gift-roses.svg" alt="" aria-hidden="true" loading="lazy">
+          <img class="gift-present" src="assets/gift-box-pink.svg" alt="" aria-hidden="true" loading="lazy">
+        </article>
+        <article class="envelope-card emerge" data-gift="groom" aria-label="Mừng cưới nhà trai">
+          <div class="envelope-shell">
+            <div class="envelope-back-flap" aria-hidden="true"></div>
+            <div class="envelope-header"><span class="envelope-heart" aria-hidden="true">♥</span><h3>Mừng cưới nhà trai</h3></div>
+            <div class="envelope-letter">
+              <div class="bank-text">
+                <div class="bank-brand"><span class="bank-mark bank-mark-groom" aria-hidden="true"><i></i><i></i></span><strong data-bank>Techcombank</strong></div>
+                <span class="bank-owner" data-owner>TRẦN VĂN MINH</span>
+                <button class="account-copy" type="button" data-account title="Sao chép số tài khoản" aria-label="Sao chép số tài khoản nhà trai">Chưa cập nhật STK</button>
+              </div>
+              <div class="qr-window"><img class="gift-qr" src="assets/qr-nha-trai.svg" alt="Mã QR minh họa nhà trai, cần thay bằng mã ngân hàng thật"></div>
+            </div>
+            <div class="envelope-front-left" aria-hidden="true"></div>
+            <div class="envelope-front-right" aria-hidden="true"></div>
+          </div>
+          <img class="envelope-flora envelope-flora-left" src="assets/gift-roses.svg" alt="" aria-hidden="true" loading="lazy">
+          <img class="envelope-flora envelope-flora-top" src="assets/gift-roses.svg" alt="" aria-hidden="true" loading="lazy">
+          <img class="gift-present" src="assets/gift-box-champagne.svg" alt="" aria-hidden="true" loading="lazy">
+        </article>
+      </div>
+      <p class="gift-footnote">Có bạn chung vui đã là điều chúng mình trân quý nhất ♡</p>
+      <p class="gift-demo-note" id="gift-demo-note">* QR và thông tin ngân hàng đang là nội dung minh họa, chưa dùng để chuyển tiền.</p>
     </div>
   </div>
 </section>

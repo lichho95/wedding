@@ -1,4 +1,4 @@
-# Thiệp cưới Minh & Lan — V3 (mockup fidelity)
+# Thiệp cưới Minh & Lan — V3.1 (phong bì Mừng cưới)
 
 Trang HTML/CSS/JS thuần, deploy lên Cloudflare Pages bằng Direct Upload (không cần Node.js, database, VPS).
 
@@ -48,3 +48,14 @@ Các comment trong `index.html` ghi rõ kích thước/đường dẫn:
 - Cuối trang hai thẻ bản đồ gia đình và lời cảm ơn.
 
 Nếu cần màu sắc/font: chỉnh biến CSS đầu file `styles.css`. Không nên dùng trực tiếp một ảnh mockup toàn trang làm background vì khi đó chữ không sửa được và layout không responsive.
+
+## Cập nhật V3.1 — Phong bì Mừng cưới
+
+- Chỉ thay section **Mừng cưới**: hai phong bì pastel nắp gập, thiệp thông tin ngân hàng, mã QR, hoa và hộp quà SVG riêng (giữ layout những phần khác).
+- Kích thước QR thực đề xuất **700 × 700 px**, tỉ lệ vuông 1:1, không crop và không chèn hoa vào vùng mã. Tên file tùy ý; sửa `gifts.bride.qrImage`, `gifts.groom.qrImage` trong `config.js`.
+- Tên ngân hàng và chủ tài khoản đang là **ví dụ** để dễ review UI; số tài khoản rỗng và QR mẫu **không dùng thanh toán**. Thay đủ 4 trường `bank`, `owner`, `account`, `qrImage` cho *cả hai bên* trước khi chia sẻ website.
+- Nếu ảnh QR không phải SVG mẫu mặc định, đủ thông tin tài khoản của hai bên, website tự ẩn cảnh báo dữ liệu mẫu dưới phong bì.
+- Nút số tài khoản sao chép số thật nếu có; không tự tạo số tài khoản hoặc mã QR.
+- Hộp quà có thể đổi trong HTML: `assets/gift-box-pink.svg`, `assets/gift-box-champagne.svg` (SVG vector, không cần cắt ảnh).
+
+- Tùy chọn logo ngân hàng thật: thêm file PNG/SVG biểu tượng nền trong **128 × 128 px**, đặt ví dụ `assets/logo-ngan-hang.png`, khai báo `gifts.bride.bankLogo` hoặc `gifts.groom.bankLogo` trong `config.js`. Nếu không có thì website hiển thị biểu tượng màu trang trí.

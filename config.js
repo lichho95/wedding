@@ -57,8 +57,11 @@ window.WEDDING_CONFIG = {
 
   // KHÔNG dùng QR mẫu để giao dịch; hãy thay bằng ảnh QR thật đã kiểm tra.
   gifts: {
-    bride: { bank: '', owner: '', account: '', qrImage: 'assets/qr-nha-gai.svg' },
-    groom: { bank: '', owner: '', account: '', qrImage: 'assets/qr-nha-trai.svg' }
+    // CHỈ VÍ DỤ TÊN NGÂN HÀNG & CHỦ TÀI KHOẢN ĐỂ HIỂN THỊ GIAO DIỆN.
+    // Số tài khoản để trống; QR mẫu không thực hiện chuyển khoản.
+    // Thay 4 giá trị này bằng dữ liệu thật của gia đình trước khi chia sẻ link.
+    bride: { bank: 'Vietcombank', bankLogo: '', owner: 'NGUYỄN THỊ LAN', account: '', qrImage: 'assets/qr-nha-gai.svg' },
+    groom: { bank: 'Techcombank', bankLogo: '', owner: 'TRẦN VĂN MINH', account: '', qrImage: 'assets/qr-nha-trai.svg' }
   },
 
   sliderInterval: 6500, // milliseconds, 0 = tắt autoplay
