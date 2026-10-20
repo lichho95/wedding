@@ -21,12 +21,44 @@
   $$('.menu a').forEach(a => a.addEventListener('click', () => {
     menu?.classList.remove('open'); menuButton?.setAttribute('aria-expanded','false');
   }));
-  if ('IntersectionObserver' in window) {
+  /* Show sections as they enter the screen. Keep layout intact (transform/opacity only). */
+  $$('.gallery-photo, .love-moment').forEach((el,i) => {
+    el.classList.add('emerge');
+    el.style.setProperty('--reveal-delay', `${Math.min(i % 6, 5) * 60}ms`);
+  });
+  if (reduceMotion || !('IntersectionObserver' in window)) {
+    $$('.emerge').forEach(el => el.classList.add('shown'));
+  } else {
     const revealObserver = new IntersectionObserver(entries => {
-      entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('shown'); revealObserver.unobserve(entry.target); } });
-    }, {threshold: .07, rootMargin:'80px 0px'});
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('shown');
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, {threshold: .08, rootMargin:'0px 0px -30px 0px'});
     $$('.emerge').forEach(el => revealObserver.observe(el));
-  } else $$('.emerge').forEach(el => el.classList.add('shown'));
+  }
+
+  /* Format the digits only; preserve every Vietnamese word and existing text font. */
+  const numericSelector = '.wedding-card [data-field="date"],.wedding-card [data-field="time"],.schedule-top [data-date]';
+  function styleNumbers(element) {
+    if (!element) return;
+    const original=element.textContent;
+    if (!/[0-9]/.test(original)) return;
+    const fragment=document.createDocumentFragment();
+    const matches=original.matchAll(/\d+(?:[.\/:–-]\d+)*/g);
+    let pos=0;
+    for (const m of matches) {
+      if (m.index>pos) fragment.append(document.createTextNode(original.slice(pos,m.index)));
+      const digits=document.createElement('span');
+      digits.className='beautiful-number';digits.textContent=m[0];fragment.append(digits);
+      pos=m.index+m[0].length;
+    }
+    fragment.append(document.createTextNode(original.slice(pos)));
+    element.replaceChildren(fragment);
+  }
+  const styleNumericDates=()=> $$(numericSelector).forEach(styleNumbers);
   const progress = $('#scroll-meter');
   let scrollTick = false;
   window.addEventListener('scroll', () => {
@@ -105,6 +137,8 @@
     const ev = C.events?.[card.dataset.event] || {};
     ['date','time','address'].forEach(k=>setText($(`[data-field="${k}"]`,card), ev[k] || 'Đang cập nhật'));
   });
+
+  styleNumericDates();
 
   /* Dynamic SVG journey drawn through the photo centers, including mobile vertical layout. */
   const track=$('#love-track'), svg=$('#love-svg'), base=$('#love-path'), fill=$('#love-fill'), heart=$('#travel-heart');
@@ -187,6 +221,8 @@
     });
   });
 
+  styleNumericDates(); // schedule dates have now been populated
+
   /* Bank gifts: QR must be replaced. Never fabricate transfers. */
   const notice=$('#notice');let noticeTimer=0;
   const notify=message=>{
@@ -208,6 +244,7 @@
     }
     const account=$('[data-account]',card);
     setText(account,data.account||'Chưa cập nhật STK');
+    styleNumbers(account);
     if(!data.account)account?.setAttribute('data-missing','');
     else account?.removeAttribute('data-missing');
     if(data.qrImage)$('.gift-qr',card).src=data.qrImage;
@@ -234,41 +271,157 @@
     else {a.removeAttribute('target');a.removeAttribute('href');a.classList.add('disabled');a.setAttribute('aria-disabled','true');a.addEventListener('click',e=>{e.preventDefault();notify('Địa chỉ Google Maps sẽ được cập nhật sau')})}
   });
 
-  /* Gallery lightbox. */
+  /* ========================================================
+     Full-viewport gallery. Reuse one image node; preload neighbours.
+     Supports buttons, arrow keys, swipe/touch and mouse drag.
+     ======================================================== */
   const viewer=$('#photo-viewer'), viewerImage=$('#viewer-image');
-  const photos=$$('.gallery-photo img');let photoIndex=0;
-  function openPhoto(i){
-    if(!viewer)return;photoIndex=(i+photos.length)%photos.length;
-    viewerImage.src=photos[photoIndex].src;
-    viewerImage.alt=photos[photoIndex].alt;
-    if(!viewer.open)viewer.showModal();document.body.classList.add('dialog-open');
+  const viewerStage=$('#viewer-stage'), viewerCounter=$('#viewer-counter');
+  const viewerCaption=$('#viewer-caption'), galleryButtons=$$('.gallery-photo');
+  const photos=galleryButtons.map(b=>$('img',b));
+  let photoIndex=0, photoToken=0, lastPhotoTrigger=null;
+  const loadedPhotos=new Map();
+  const normalizedPhotoIndex=i=>(i+photos.length)%photos.length;
+  function preloadPhoto(index){
+    if(!photos.length)return Promise.resolve(null);
+    const i=normalizedPhotoIndex(index);
+    if(loadedPhotos.has(i))return loadedPhotos.get(i);
+    const target=photos[i];
+    const img=new Image();img.decoding='async';img.src=target.currentSrc||target.src;
+    const promise=img.decode?.().catch(()=>null).then(()=>img)||new Promise(resolve=>{
+      img.onload=()=>resolve(img);img.onerror=()=>resolve(null);
+    });
+    loadedPhotos.set(i,promise);
+    return promise;
   }
-  function stepPhoto(dir){openPhoto(photoIndex+dir)}
-  $$('.gallery-photo').forEach((button,i)=>button.addEventListener('click',()=>openPhoto(i)));
-  $('#gallery-more')?.addEventListener('click',()=>openPhoto(0));
+  function showPhoto(index,direction=0){
+    if(!viewer || !viewerImage || !photos.length)return;
+    photoIndex=normalizedPhotoIndex(index);
+    const target=photos[photoIndex], token=++photoToken;
+    setText(viewerCounter,`${photoIndex+1} / ${photos.length}`);
+    setText(viewerCaption,target.alt || 'Ảnh cưới');
+    viewerImage.classList.add('is-loading');
+    preloadPhoto(photoIndex).then(()=>{
+      if(token!==photoToken || !viewer.open)return;
+      viewerImage.src=target.currentSrc||target.src;
+      viewerImage.alt=target.alt||'Ảnh cưới';
+      viewerImage.classList.remove('is-loading');
+      // A short compositor-only slide communicates next/previous navigation.
+      if (direction && !reduceMotion && typeof viewerImage.animate==='function') {
+        viewerImage.getAnimations().forEach(anim=>anim.cancel());
+        viewerImage.animate([
+          {opacity:.65,transform:`translate3d(${direction>0?'24px':'-24px'},0,0)`},
+          {opacity:1,transform:'translate3d(0,0,0)'}
+        ],{duration:240,easing:'cubic-bezier(.2,.78,.2,1)'});
+      }
+    });
+    // Loading the two nearest slides ahead avoids sudden blank frames.
+    preloadPhoto(photoIndex+1);preloadPhoto(photoIndex-1);
+  }
+  function openPhoto(index,trigger){
+    if(!viewer || !photos.length)return;
+    lastPhotoTrigger=trigger||document.activeElement;
+    if(!viewer.open)viewer.showModal();
+    document.body.classList.add('dialog-open');
+    showPhoto(index);
+    $('#close-photo')?.focus({preventScroll:true});
+  }
+  function stepPhoto(direction){if(viewer?.open)showPhoto(photoIndex+direction,direction)}
+  galleryButtons.forEach((button,i)=>button.addEventListener('click',()=>openPhoto(i,button)));
+  $('#gallery-more')?.addEventListener('click',e=>openPhoto(0,e.currentTarget));
   $('#viewer-prev')?.addEventListener('click',()=>stepPhoto(-1));
   $('#viewer-next')?.addEventListener('click',()=>stepPhoto(1));
   $('#close-photo')?.addEventListener('click',()=>viewer?.close());
-  viewer?.addEventListener('close',()=>document.body.classList.remove('dialog-open'));
+  viewer?.addEventListener('close',()=>{
+    ++photoToken;document.body.classList.remove('dialog-open');
+    lastPhotoTrigger?.focus?.({preventScroll:true});
+  });
   viewer?.addEventListener('click',e=>{if(e.target===viewer)viewer.close()});
+  let swipeStart=null;
+  const swipeBegin=(x,y)=>{swipeStart={x,y};};
+  const swipeEnd=(x,y)=>{
+    if(!swipeStart)return;
+    const dx=x-swipeStart.x,dy=y-swipeStart.y;swipeStart=null;
+    if(Math.abs(dx)>45 && Math.abs(dx)>Math.abs(dy)*1.15)stepPhoto(dx<0?1:-1);
+  };
+  viewerStage?.addEventListener('touchstart',e=>{
+    const t=e.changedTouches[0];swipeBegin(t.clientX,t.clientY);
+  },{passive:true});
+  viewerStage?.addEventListener('touchend',e=>{
+    const t=e.changedTouches[0];swipeEnd(t.clientX,t.clientY);
+  },{passive:true});
+  viewerStage?.addEventListener('pointerdown',e=>{
+    if(e.pointerType==='mouse'&&e.button===0)swipeBegin(e.clientX,e.clientY);
+  });
+  viewerStage?.addEventListener('pointerup',e=>{
+    if(e.pointerType==='mouse')swipeEnd(e.clientX,e.clientY);
+  });
 
-  /* Wedding film: MP4 or YouTube; do not autoplay without user click. */
-  const filmDialog=$('#film-viewer'), filmHolder=$('#film-holder'), filmPoster=$('#film-poster');
-  if(C.video?.poster) filmPoster.src=C.video.poster;
-  $('#play-film')?.addEventListener('click',()=>{
+  /* ========================================================
+     Film: MP4 auto enters native fullscreen on the Play gesture
+     where permitted. Mobile Safari may use webkitEnterFullscreen;
+     otherwise cinema dialog is fullscreen. YouTube supports iframe
+     fullscreen if the provider/browser allows it.
+     ======================================================== */
+  const filmDialog=$('#film-viewer'), filmHolder=$('#film-holder'),filmPoster=$('#film-poster');
+  if(C.video?.poster && filmPoster) filmPoster.src=C.video.poster;
+  let lastFilmTrigger=null;
+  const requestFilmFullscreen=element=>{
+    try {
+      if(typeof element.requestFullscreen==='function'){
+        const result=element.requestFullscreen({navigationUI:'hide'});
+        if(result?.catch)result.catch(()=>{});
+      } else if(typeof element.webkitEnterFullscreen==='function'){
+        element.webkitEnterFullscreen();
+      }
+    }catch{/* Browser declined; dialog remains fullscreen and playable. */}
+  };
+  $('#play-film')?.addEventListener('click',e=>{
     if(!filmDialog || !filmHolder)return;
+    lastFilmTrigger=e.currentTarget;
     filmHolder.replaceChildren();
     if(C.video?.youtubeEmbedUrl){
-      const iframe=document.createElement('iframe');iframe.src=C.video.youtubeEmbedUrl+(C.video.youtubeEmbedUrl.includes('?')?'&':'?')+'autoplay=1';iframe.allow='autoplay; encrypted-media; picture-in-picture';iframe.allowFullscreen=true;iframe.title='Thước phim tình yêu';filmHolder.append(iframe);
+      const iframe=document.createElement('iframe');
+      iframe.src=C.video.youtubeEmbedUrl+(C.video.youtubeEmbedUrl.includes('?')?'&':'?')+'autoplay=1&playsinline=1';
+      iframe.allow='autoplay; fullscreen; encrypted-media; picture-in-picture';
+      iframe.setAttribute('allowfullscreen','');iframe.title='Thước phim tình yêu';
+      filmHolder.append(iframe);
+      filmDialog.showModal();document.body.classList.add('dialog-open');
+      // The frame can occupy the screen; inner YouTube fullscreen is also available.
+      requestFilmFullscreen(filmDialog);
     }else if(C.video?.src){
-      const video=document.createElement('video');video.src=C.video.src;video.poster=C.video.poster||'';video.controls=true;video.autoplay=true;video.playsInline=true;filmHolder.append(video);
-    } else {
-      const message=document.createElement('div');message.className='film-empty';message.textContent='Thước phim tình yêu sẽ được bật mí tại đây ♡';filmHolder.append(message);
+      const video=document.createElement('video');
+      video.src=C.video.src;video.poster=C.video.poster||'';
+      video.controls=true;video.playsInline=true;video.preload='metadata';
+      video.setAttribute('controlsList','nodownload');
+      filmHolder.append(video);
+      filmDialog.showModal();document.body.classList.add('dialog-open');
+      // Requesting fullscreen must happen inside the user click handler.
+      requestFilmFullscreen(video);
+      const playPromise=video.play();if(playPromise?.catch)playPromise.catch(()=>{});
+    }else{
+      const message=document.createElement('div');message.className='film-empty';
+      message.textContent='Thước phim tình yêu sẽ được bật mí tại đây ♡';
+      filmHolder.append(message);
+      filmDialog.showModal();document.body.classList.add('dialog-open');
     }
-    filmDialog.showModal();document.body.classList.add('dialog-open');
   });
-  $('#close-film')?.addEventListener('click',()=>filmDialog?.close());
-  filmDialog?.addEventListener('click',e=>{if(e.target===filmDialog)filmDialog.close()});
-  filmDialog?.addEventListener('close',()=>{filmHolder.replaceChildren();document.body.classList.remove('dialog-open')});
-  window.addEventListener('keydown',e=>{if(viewer?.open){if(e.key==='ArrowRight')stepPhoto(1);if(e.key==='ArrowLeft')stepPhoto(-1)}});
+  const closeFilm=()=>filmDialog?.close();
+  $('#close-film')?.addEventListener('click',closeFilm);
+  filmDialog?.addEventListener('click',e=>{if(e.target===filmDialog)closeFilm()});
+  filmDialog?.addEventListener('close',()=>{
+    const video=$('video',filmHolder);if(video)video.pause();
+    if(document.fullscreenElement && (document.fullscreenElement===filmDialog || filmDialog.contains(document.fullscreenElement))) {
+      document.exitFullscreen?.().catch?.(()=>{});
+    }
+    filmHolder.replaceChildren();document.body.classList.remove('dialog-open');
+    lastFilmTrigger?.focus?.({preventScroll:true});
+  });
+  window.addEventListener('keydown',e=>{
+    if(viewer?.open){
+      if(e.key==='ArrowRight'){e.preventDefault();stepPhoto(1)}
+      if(e.key==='ArrowLeft'){e.preventDefault();stepPhoto(-1)}
+    }
+  });
+
 })();

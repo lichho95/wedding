@@ -12,7 +12,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/heart.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@300;400;500;600&family=Cormorant+Garamond:wght@400;500;600;700&family=Great+Vibes&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
   <script src="config.js" defer></script>
   <script src="script.js" defer></script>
@@ -56,8 +56,8 @@
     <figure class="hero-polaroid photo-a"><img src="assets/polaroid.webp" alt=""><figcaption>Thanh xuân<br>có nhau là đủ...</figcaption></figure>
     <figure class="hero-polaroid photo-b"><img src="assets/gallery-02.webp" alt=""></figure>
   </div>
-  <button class="hero-arrow prev" id="hero-prev" aria-label="Ảnh trước" type="button">‹</button>
-  <button class="hero-arrow next" id="hero-next" aria-label="Ảnh tiếp theo" type="button">›</button>
+  <button class="hero-arrow prev" id="hero-prev" aria-label="Ảnh trước" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 4 7 12l8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <button class="hero-arrow next" id="hero-next" aria-label="Ảnh tiếp theo" type="button"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 4 8 8-8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
   <div class="hero-dots" id="hero-dots" aria-label="Chọn ảnh">
     <button class="on" aria-label="Ảnh 1" data-slide="0"></button><button aria-label="Ảnh 2" data-slide="1"></button><button aria-label="Ảnh 3" data-slide="2"></button>
   </div>
@@ -120,6 +120,8 @@
 <!-- ================= VIDEO + PHOTO GALLERY =================
     Video poster: assets/video-poster.webp — 1920x1080 px, tỉ lệ 16:9.
     Video MP4: assets/wedding-film.mp4, hoặc YouTube embed trong config.js > video.
+    Bấm Play: video sẽ thử vào native fullscreen; nếu thiết bị chặn thì dùng fullscreen overlay.
+    Trên iPhone/iPad, hệ điều hành có thể chọn chế độ trình phát video native.
     Album: assets/gallery-01..06.webp. Kích thước ảnh 1200x900 px (4:3),
     ảnh gallery-01 khuyên dùng 1200x1400 px (ảnh đứng).
 -->
@@ -186,8 +188,8 @@
             <div class="envelope-front-left" aria-hidden="true"></div>
             <div class="envelope-front-right" aria-hidden="true"></div>
           </div>
-          <img class="envelope-flora envelope-flora-left" src="assets/gift-roses.svg" alt="" aria-hidden="true" loading="lazy">
-          <img class="envelope-flora envelope-flora-top" src="assets/gift-roses.svg" alt="" aria-hidden="true" loading="lazy">
+          <img class="envelope-flora envelope-flora-left" src="assets/floral.svg" alt="" aria-hidden="true" loading="lazy">
+          <img class="envelope-flora envelope-flora-top" src="assets/floral.svg" alt="" aria-hidden="true" loading="lazy">
           <img class="gift-present" src="assets/gift-box-pink.svg" alt="" aria-hidden="true" loading="lazy">
         </article>
         <article class="envelope-card emerge" data-gift="groom" aria-label="Mừng cưới nhà trai">
@@ -205,8 +207,8 @@
             <div class="envelope-front-left" aria-hidden="true"></div>
             <div class="envelope-front-right" aria-hidden="true"></div>
           </div>
-          <img class="envelope-flora envelope-flora-left" src="assets/gift-roses.svg" alt="" aria-hidden="true" loading="lazy">
-          <img class="envelope-flora envelope-flora-top" src="assets/gift-roses.svg" alt="" aria-hidden="true" loading="lazy">
+          <img class="envelope-flora envelope-flora-left" src="assets/floral.svg" alt="" aria-hidden="true" loading="lazy">
+          <img class="envelope-flora envelope-flora-top" src="assets/floral.svg" alt="" aria-hidden="true" loading="lazy">
           <img class="gift-present" src="assets/gift-box-champagne.svg" alt="" aria-hidden="true" loading="lazy">
         </article>
       </div>
@@ -233,7 +235,17 @@
 </main>
 <footer class="footer"><div class="shell footer-inner"><a href="#home" class="footer-logo">♡ <span data-couple>Minh &amp; Lan</span></a><div class="footer-menu"><a href="#home">Trang chủ</a><a href="#story">Chuyện chúng mình</a><a href="#film">Video</a><a href="#gallery">Ảnh cưới</a><a href="#events">Lịch trình</a><a href="#gifts">Mừng cưới</a></div><span class="footer-thanks">Cảm ơn bạn đã là một phần trong hành trình hạnh phúc này! ♥</span></div></footer>
 
-<dialog class="viewer" id="photo-viewer" aria-label="Xem album ảnh"><button class="close-viewer" id="close-photo" type="button" aria-label="Đóng">×</button><button class="viewer-nav" id="viewer-prev" type="button" aria-label="Ảnh trước">‹</button><img src="assets/gallery-01.webp" alt="Ảnh cưới phóng to" id="viewer-image"><button class="viewer-nav" id="viewer-next" type="button" aria-label="Ảnh tiếp theo">›</button></dialog>
+<!-- ALBUM VIEWER: modal toàn màn hình; ảnh giữ tỉ lệ, prev/next cố định, vuốt trái/phải trên điện thoại. -->
+<dialog class="viewer photo-viewer" id="photo-viewer" aria-label="Xem album ảnh">
+  <button class="close-viewer" id="close-photo" type="button" aria-label="Đóng album">×</button>
+  <div class="viewer-stage" id="viewer-stage">
+    <img src="assets/gallery-01.webp" alt="Ảnh cưới phóng to" id="viewer-image" draggable="false">
+  </div>
+  <button class="viewer-nav viewer-prev" id="viewer-prev" type="button" aria-label="Ảnh trước"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M15 4 7 12l8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <button class="viewer-nav viewer-next" id="viewer-next" type="button" aria-label="Ảnh tiếp theo"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m9 4 8 8-8 8" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <div class="viewer-counter" id="viewer-counter" aria-live="polite">1 / 6</div>
+  <p class="viewer-caption" id="viewer-caption" aria-live="polite"></p>
+</dialog>
 <dialog class="viewer film-viewer" id="film-viewer" aria-label="Video tình yêu"><button class="close-viewer" id="close-film" type="button" aria-label="Đóng video">×</button><div id="film-holder" class="film-holder"></div></dialog>
 <div class="notice" role="status" id="notice" aria-live="polite"></div>
 </body>

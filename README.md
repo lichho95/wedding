@@ -1,4 +1,4 @@
-# Thiệp cưới Minh & Lan — V3.1 (phong bì Mừng cưới)
+# Thiệp cưới Minh & Lan — V3.2 (nâng cấp font số, điều hướng, album, video)
 
 Trang HTML/CSS/JS thuần, deploy lên Cloudflare Pages bằng Direct Upload (không cần Node.js, database, VPS).
 
@@ -59,3 +59,39 @@ Nếu cần màu sắc/font: chỉnh biến CSS đầu file `styles.css`. Không
 - Hộp quà có thể đổi trong HTML: `assets/gift-box-pink.svg`, `assets/gift-box-champagne.svg` (SVG vector, không cần cắt ảnh).
 
 - Tùy chọn logo ngân hàng thật: thêm file PNG/SVG biểu tượng nền trong **128 × 128 px**, đặt ví dụ `assets/logo-ngan-hang.png`, khai báo `gifts.bride.bankLogo` hoặc `gifts.groom.bankLogo` trong `config.js`. Nếu không có thì website hiển thị biểu tượng màu trang trí.
+
+
+## Cập nhật V3.2 — Cải thiện trải nghiệm và hiệu ứng
+
+**Các phần nội dung, bố cục và hai phong bì Mừng cưới của V3.1 được giữ nguyên.**
+
+### 1. Font dành riêng cho số
+
+- Dùng **Manrope** cho số đếm ngược, ngày cưới, mốc thời gian, giờ sự kiện, số tài khoản; các chữ Việt vẫn dùng bộ font như V3.1.
+- Các chuỗi trộn chữ và số (ví dụ `Chủ Nhật, 14/11/2027`) được JS bọc **chỉ phần số** bằng `.beautiful-number`, tuyệt đối không sửa chữ gốc.
+- Đổi font số tại đầu phần `V3.2` cuối `styles.css`: `--numeric` và các class `.count-grid b`, `.hero-date`, `.love-year`.
+- Google Fonts được tải từ CDN; nếu người xem chặn kết nối fonts, trình duyệt dùng font hệ thống dự phòng.
+
+### 2. Điều hướng đơn giản hơn
+
+- Hero đổi sang icon SVG mũi tên nét mảnh, không còn nút tròn.
+- Album luôn có mũi tên trái/phải cố định ở cạnh màn hình. Trên desktop dùng **phím ← / →**, trên điện thoại **vuốt trái/phải**, hoặc nhấn mũi tên. Nút **×** đóng, phím **Esc** cũng đóng được.
+- Album xem toàn màn hình trên điện thoại, ảnh **không bị crop**, giữ nguyên tỉ lệ; có số thứ tự và chú thích ảnh.
+- Tải trước ảnh kế bên bằng `Image.decode()` nhằm giảm nháy/giật; hiệu ứng đổi ảnh chạy nhẹ trên `transform + opacity`.
+
+### 3. Video fullscreen
+
+- Khi `video.src` chứa file MP4 hợp lệ, nút Play mở modal và **thử gọi fullscreen trên video** ngay trong thao tác click. Browser có thể từ chối fullscreen do hạn chế thiết bị hoặc quyền; khi đó video vẫn chạy ở khung trình chiếu lớn, có nút điều khiển và đóng.
+- Ví dụ: `video: {src:'assets/wedding-film.mp4',youtubeEmbedUrl:'',poster:'assets/video-poster.webp'}`. Sao chép file MP4 vào đúng đường dẫn.
+- Khi dùng YouTube, phải cung cấp **link embed** chứ không phải link `watch?v=`. Khung YouTube được phép fullscreen; người xem có thể sử dụng nút fullscreen của YouTube nếu trình duyệt không cho mở ngay.
+- Để trống cả hai nguồn thì website chỉ hiển thị thông báo demo, không phát video giả.
+- Video nên dùng MP4/H.264, 1920×1080 (16:9), tối ưu dung lượng để tải nhanh trên điện thoại. Video quá nặng không nên upload cùng HTML; cân nhắc dùng YouTube unlisted nếu muốn.
+
+### 4. Animation khi cuộn
+
+- Những section / ảnh album / thẻ sự kiện có fade-in + dịch nhẹ, xuất hiện tuần tự theo thứ tự.
+- Tôn trọng cài đặt **Reduce Motion** của hệ điều hành để tránh gây khó chịu.
+
+### Triển khai lên Cloudflare Pages
+
+Upload **toàn bộ nội dung thư mục** (hoặc ZIP có `index.html` ở gốc) qua Direct Upload. Không cần build và không cần backend. Hãy thay ảnh, video, ngày giờ, tài khoản, QR và địa chỉ mẫu trước khi chia sẻ cho khách.

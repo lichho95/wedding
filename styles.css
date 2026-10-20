@@ -193,3 +193,108 @@
 /* Bank icon override: config.js > gifts.{bride,groom}.bankLogo, SVG/PNG 128×128. */
 .bank-mark.has-bank-logo{width:18px;height:18px;flex:0 0 18px}
 .bank-logo{width:100%;height:100%;display:block;object-fit:contain}
+
+
+/* ===============================================================
+   V3.2 — polish ONLY: numeric typography, streamlined navigation,
+   fast swipe-friendly photo viewer, fullscreen film and scroll reveal.
+   Vietnamese TEXT fonts remain exactly as in V3.1.
+   =============================================================== */
+:root { --numeric: 'Manrope', 'Arial', sans-serif; --ease-reveal: cubic-bezier(.21,.8,.24,1); }
+/* Numbers inside a mixed phrase are wrapped by JS in .beautiful-number spans.
+   Never change the family of adjoining Vietnamese words. */
+.beautiful-number, .count-grid b, .hero-date, .love-year,
+.schedule-steps li strong, .account-copy .beautiful-number, .viewer-counter {
+  font-family:var(--numeric) !important;
+  font-weight:600;
+  font-variant-numeric: lining-nums tabular-nums;
+  font-feature-settings:'lnum' 1,'tnum' 1;
+  letter-spacing:.005em;
+}
+.hero-date {font-size:clamp(18px,2vw,25px);font-weight:500;letter-spacing:.18em;}
+.count-grid b {font-size:clamp(29px,2.9vw,37px);font-weight:500;line-height:1.16;}
+.count-grid div {min-width:70px;}
+.love-year {font-size:12px;font-weight:600;letter-spacing:.03em;margin-top:2px;}
+.schedule-steps li strong {font-size:13px;font-weight:700;line-height:1.4;}
+.wedding-card .beautiful-number {font-size:.91em;white-space:nowrap;}
+.schedule-top time .beautiful-number {font-size:.93em;}
+/* No circular outline or glyph-centering issues: pure thin stroke chevrons. */
+.hero-arrow {width:54px;height:68px;border:0;border-radius:0;background:transparent;
+  box-shadow:none;color:#a84b5d;padding:12px;display:grid;place-items:center;
+  transition:transform .22s ease,color .22s ease,opacity .22s ease;}
+.hero-arrow svg {width:25px;height:34px;display:block;filter:drop-shadow(0 1px 2px #fff8f4);}
+.hero-arrow:hover {background:transparent;box-shadow:none;color:#7e3342;transform:translateY(-50%) scale(1.09);}
+.hero-arrow.prev {left:8px;}.hero-arrow.next {right:8px;}
+/* Stronger yet gentle scroll reveal, staggered per group, no blur/jank. */
+.emerge {transition:opacity .78s var(--ease-reveal),transform .78s var(--ease-reveal);
+  transition-delay:var(--reveal-delay,0ms);will-change:opacity,transform;}
+.emerge:not(.shown) {opacity:0;transform:translate3d(0,32px,0) scale(.985);}
+.emerge.shown {opacity:1;transform:translate3d(0,0,0) scale(1);will-change:auto;}
+/* Stagger only sibling cards and gallery photos, leave typography untouched. */
+.wedding-cards .wedding-card:nth-child(2),.gift-pair .envelope-card:nth-child(2),
+.schedule-pair .schedule-card:nth-child(2) {--reveal-delay:115ms;}
+.wedding-cards .wedding-card:nth-child(3) {--reveal-delay:175ms;}
+.wedding-cards .wedding-card:nth-child(4) {--reveal-delay:235ms;}
+/* Gallery overlay stays fixed and doesn't reflow when images have different sizes. */
+.photo-viewer.viewer {width:100%;max-width:none;height:100dvh;max-height:none;inset:0;
+  margin:0;padding:0;border:0;overflow:hidden;overscroll-behavior:contain;
+  background:rgba(24,17,23,.985);color:#fff;}
+.photo-viewer.viewer[open] {display:block;}
+.photo-viewer .viewer-stage {position:absolute;inset:0;display:flex;
+  align-items:center;justify-content:center;padding:55px 70px 74px;
+  overflow:hidden;touch-action:pan-y;user-select:none;cursor:grab;}
+.photo-viewer .viewer-stage:active {cursor:grabbing;}
+.photo-viewer .viewer-stage img {display:block;max-width:100%;width:auto;
+  max-height:100%;height:auto;object-fit:contain;object-position:center;
+  border:0;box-shadow:0 15px 50px #0005;transition:opacity .16s ease;
+  pointer-events:none;user-select:none;-webkit-user-drag:none;}
+.photo-viewer .viewer-stage img.is-loading {opacity:.42;}
+.photo-viewer .close-viewer {position:absolute;z-index:15;top:max(10px,env(safe-area-inset-top));
+  right:max(16px,env(safe-area-inset-right));width:46px;height:46px;
+  border:0;background:#fff1;border-radius:50%;color:#fff;display:grid;place-items:center;
+  font:28px/1 var(--sans);transition:background .18s;}
+.photo-viewer .close-viewer:hover {background:#fff3;}
+.photo-viewer .viewer-nav {position:absolute;top:50%;transform:translateY(-50%);
+  z-index:10;display:grid;place-items:center;width:58px;height:100px;
+  background:transparent;border:0;border-radius:0;color:#fff;opacity:.88;
+  transition:opacity .18s,transform .18s;}
+.photo-viewer .viewer-nav:hover {opacity:1;transform:translateY(-50%) scale(1.12);}
+.photo-viewer .viewer-nav svg {width:29px;height:41px;display:block;
+  filter:drop-shadow(0 2px 4px #000a);}
+.photo-viewer .viewer-prev {left:4px;}.photo-viewer .viewer-next {right:4px;}
+.photo-viewer .viewer-counter {position:absolute;z-index:10;bottom:max(40px,env(safe-area-inset-bottom) + 40px);
+  left:50%;transform:translateX(-50%);color:#fff9;font-size:13px;}
+.photo-viewer .viewer-caption {position:absolute;z-index:10;bottom:max(12px,env(safe-area-inset-bottom) + 12px);
+  left:10%;right:10%;text-align:center;margin:0;color:#fff9;font:500 13px var(--sans);}
+.film-viewer.viewer {padding:0;inset:0;overflow:hidden;background:#080608f7;}
+.film-viewer.viewer[open] {display:flex;align-items:center;justify-content:center;}
+.film-viewer .film-holder {width:min(100vw,1400px);height:min(100dvh,calc(100vw * 9 / 16));max-height:100dvh;}
+.film-viewer .film-holder video,.film-viewer .film-holder iframe{object-fit:contain;}
+.film-viewer .close-viewer {top:max(10px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right));z-index:25;
+ background:#090609bd;border-radius:50%;width:42px;height:42px;font:26px/1 var(--sans);color:#fff;}
+/* Keep controls visible, leave no horizontal margins on mobile fullscreen album. */
+@media(max-width:580px) {
+  .hero-arrow {top:33%;width:42px;height:66px;padding:9px;}
+  .hero-arrow svg {width:23px;height:32px;}
+  .hero-date {font-size:20px;letter-spacing:.12em;}
+  .count-grid b {font-size:33px;}
+  .love-year {font-size:13px;}
+  .schedule-steps li strong {font-size:14px;}
+  .photo-viewer .viewer-stage {inset:0;padding:60px 0 92px;}
+  .photo-viewer .viewer-stage img {max-width:100vw;max-height:100%;box-shadow:none;}
+  .photo-viewer .viewer-nav {top:50%;width:44px;height:100px;color:#fff;opacity:.94;
+    background:linear-gradient(to right,#10090c85,transparent);}
+  .photo-viewer .viewer-next {background:linear-gradient(to left,#10090c85,transparent);}
+  .photo-viewer .viewer-nav svg {width:23px;height:31px;}
+  .photo-viewer .viewer-prev {left:0;}.photo-viewer .viewer-next {right:0;}
+  .photo-viewer .viewer-caption {font-size:12px;left:13%;right:13%;}
+  .film-viewer .film-holder {width:100vw;height:100dvh;}
+}
+@media(prefers-reduced-motion:reduce) {
+ .emerge,.emerge:not(.shown),.emerge.shown {opacity:1;transform:none;transition:none;will-change:auto;}
+ .photo-viewer .viewer-stage img {transition:none;}
+}
+
+/* Keep keyboard focus accessible without the oversized dark-red outline. */
+.photo-viewer .viewer-nav:focus-visible,
+.photo-viewer .close-viewer:focus-visible {outline:2px solid #fff9;outline-offset:-5px;border-radius:6px;}
